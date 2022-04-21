@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/NextJs/static/css/main.63d54b2e.css",
+    "main.js": "/NextJs/static/js/main.2f027a8c.js",
+    "static/media/SEGA.TTF": "/NextJs/static/media/SEGA.8a619f32417a0fe72728.TTF",
+    "index.html": "/NextJs/index.html",
+    "main.63d54b2e.css.map": "/NextJs/static/css/main.63d54b2e.css.map",
+    "main.2f027a8c.js.map": "/NextJs/static/js/main.2f027a8c.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.63d54b2e.css",
+    "static/js/main.2f027a8c.js"
+  ]
+}
