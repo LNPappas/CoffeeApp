@@ -21,20 +21,33 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Detect package manager
+        id: detect-package-manager
+        run: |
+          PACKAGE_JSON_PATH="${{ github.workspace }}/coffee-shops/package.json"
+          PACKAGE_LOCK_PATH="${{ github.workspace }}/coffee-shops/package-lock.json"
+          if [ -f "$PACKAGE_JSON_PATH" ]; then
+            echo "manager=npm" >> $GITHUB_OUTPUT
+            echo "command=ci" >> $GITHUB_OUTPUT
+            echo "runner=npx --no-install" >> $GITHUB_OUTPUT
+            if [ ! -f "$PACKAGE_LOCK_PATH" ]; then
+              echo "package-lock.json not found"
+              exit 1
+            fi
+          else
+            echo "Unable to determine package manager"
+            exit 1
+          fi
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: "20"
-          cache: npm
+          cache: ${{ steps.detect-package-manager.outputs.manager }}
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
         with:
           static_site_generator: next
-
-      - name: List files for debug
-        run: ls -R coffee-shops
-        shell: bash
 
       - name: Restore cache
         uses: actions/cache@v4
@@ -46,10 +59,10 @@ jobs:
             ${{ runner.os }}-nextjs-${{ hashFiles('coffee-shops/package-lock.json') }}-
 
       - name: Install dependencies
-        run: npm ci --prefix coffee-shops
+        run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }} --prefix coffee-shops
 
       - name: Build with Next.js
-        run: npm run build --prefix coffee-shops
+        run: ${{ steps.detect-package-manager.outputs.runner }} next build --prefix coffee-shops
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
