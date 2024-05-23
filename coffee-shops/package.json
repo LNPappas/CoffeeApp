@@ -1,10 +1,11 @@
 {
   "name": "coffee-shops",
   "version": "0.1.0",
+  "homepage": "https://lnpappas.github.io/CoffeeApp/",
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build && next export",
     "start": "next start",
     "lint": "next lint"
   },
