@@ -21,11 +21,18 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: List files for debug
+        run: ls -la coffee-shops
+        shell: bash
+
       - name: Detect package manager
         id: detect-package-manager
         run: |
           PACKAGE_JSON_PATH="${{ github.workspace }}/coffee-shops/package.json"
           PACKAGE_LOCK_PATH="${{ github.workspace }}/coffee-shops/package-lock.json"
+          echo "Checking for package.json and package-lock.json in coffee-shops directory"
+          ls -la $PACKAGE_JSON_PATH
+          ls -la $PACKAGE_LOCK_PATH
           if [ -f "$PACKAGE_JSON_PATH" ]; then
             echo "manager=npm" >> $GITHUB_OUTPUT
             echo "command=ci" >> $GITHUB_OUTPUT
@@ -43,15 +50,16 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "20"
-          cache: ${{ steps.detect-package-manager.outputs.manager }}
+          cache: npm
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
         with:
           static_site_generator: next
 
-      - name: List files for debug
+      - name: List files after node setup
         run: ls -la coffee-shops
+        shell: bash
 
       - name: Restore cache
         uses: actions/cache@v4
