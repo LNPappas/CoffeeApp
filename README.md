@@ -1,4 +1,5 @@
 # Find Local Coffee Shops
-## NextJs App
 
-* mobile first development
+## NextJs App - [View Here!](https://lnpappas.github.io/CoffeeApp/)
+
+- mobile first development
