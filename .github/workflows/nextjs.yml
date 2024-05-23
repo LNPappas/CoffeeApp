@@ -32,6 +32,10 @@ jobs:
         with:
           static_site_generator: next
 
+      - name: List files for debug
+        run: ls -R coffee-shops
+        shell: bash
+
       - name: Restore cache
         uses: actions/cache@v4
         with:
