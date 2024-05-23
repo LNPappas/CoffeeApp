@@ -50,15 +50,15 @@ jobs:
         with:
           path: |
             coffee-shops/.next/cache
-          key: ${{ runner.os }}-nextjs-${{ hashFiles('coffee-shops/**/package-lock.json', 'coffee-shops/**/yarn.lock') }}-${{ hashFiles('coffee-shops/**.[jt]s', 'coffee-shops/**.[jt]sx') }}
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('coffee-shops/package-lock.json', 'coffee-shops/yarn.lock') }}-${{ hashFiles('coffee-shops/**/*.[jt]s', 'coffee-shops/**/*.[jt]sx') }}
           restore-keys: |
-            ${{ runner.os }}-nextjs-${{ hashFiles('coffee-shops/**/package-lock.json', 'coffee-shops/**/yarn.lock') }}-
+            ${{ runner.os }}-nextjs-${{ hashFiles('coffee-shops/package-lock.json', 'coffee-shops/yarn.lock') }}-
 
       - name: Install dependencies
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }} --prefix coffee-shops
 
       - name: Build with Next.js
-        run: ${{ steps.detect-package-manager.outputs.runner }} next build
+        run: ${{ steps.detect-package-manager.outputs.runner }} next build --prefix coffee-shops
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
