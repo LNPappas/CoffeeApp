@@ -38,6 +38,7 @@ jobs:
             echo "Unable to determine package manager"
             exit 1
           fi
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
@@ -49,6 +50,9 @@ jobs:
         with:
           static_site_generator: next
 
+      - name: List files for debug
+        run: ls -la coffee-shops
+
       - name: Restore cache
         uses: actions/cache@v4
         with:
@@ -59,10 +63,10 @@ jobs:
             ${{ runner.os }}-nextjs-${{ hashFiles('coffee-shops/package-lock.json') }}-
 
       - name: Install dependencies
-        run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }} --prefix coffee-shops
+        run: npm ci --prefix coffee-shops
 
       - name: Build with Next.js
-        run: ${{ steps.detect-package-manager.outputs.runner }} next build --prefix coffee-shops
+        run: npx next build --prefix coffee-shops
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
